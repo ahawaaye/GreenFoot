@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class MyDodo extends Dodo
 {
     private int myNrOfEggsHatched;
-    
+
     public MyDodo() {
         super( EAST );
         myNrOfEggsHatched = 0;
@@ -67,7 +67,7 @@ public class MyDodo extends Dodo
             showError( "There was no egg in this cell" );
         }
     }
-    
+
     /**
      * Returns the number of eggs Dodo has hatched so far.
      * 
@@ -76,7 +76,7 @@ public class MyDodo extends Dodo
     public int getNrOfEggsHatched() {
         return myNrOfEggsHatched;
     }
-    
+
     /**
      * Move given number of cells forward in the current direction.
      * 
@@ -94,8 +94,6 @@ public class MyDodo extends Dodo
         }
     }
 
-    
-    
     /**
      * Walks to edge of the world printing the coordinates at each step
      * 
@@ -106,7 +104,7 @@ public class MyDodo extends Dodo
 
     public void walkToWorldEdgePrintingCoordinates( ){
         while( ! borderAhead() ){
-              System.out.println(" x,y" );
+            System.out.println(" x,y" );
             move();
         }
     }
@@ -124,15 +122,17 @@ public class MyDodo extends Dodo
      */
 
     public boolean canLayEgg( ){
-      if( onEgg() ){
-           return  false; 
-       } 
-     return true;
+        if( onEgg() ){
+            return  false;
+        } 
+        return true;
     }
+
     public void turn180(){
-      turnRight();
-      turnRight();
+        turnRight();
+        turnRight();
     }
+
     public void climbOverFence (){
         turnLeft();
         move();
@@ -142,26 +142,31 @@ public class MyDodo extends Dodo
         turnRight();
         move();
         turnLeft();
-        
+
     }
+
     public boolean grainAhead(){
         boolean result = false;
-        
-        if( move()){
-            if (grainthere()) {
-                result = true;
-            }
-            turn180();
-            move();
-            turn180();
-
+        move();
+        if( onGrain()){
+            result = true;
         }
-        
+        turn180();
+        move();
+        turn180();
+        return result;
     } 
-          return result;
-     }
 
+    public boolean gotoEgg(){
+        while(onEgg()== false){
+            move();
+        }
+        return true;
+    } 
     
-     
-    
+    public void GoBackToStartOfRowAndFaceBack(){
+        
+    }
+}
+
     
