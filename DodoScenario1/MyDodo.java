@@ -133,7 +133,7 @@ public class MyDodo extends Dodo
         turnRight();
     }
 
-    public void climbOverFence (){
+    public void climbOverFence(){
         turnLeft();
         move();
         turnRight();
@@ -163,10 +163,16 @@ public class MyDodo extends Dodo
         }
         return true;
     } 
-    
-    public void GoBackToStartOfRowAndFaceBack(){
-        
-    }
-}
 
+    public void GoBackToStartOfRowAndFaceBack(){
+        turn180();
+        walkToWorldEdgePrintingCoordinates();
+        turn180();
+    }
+
+    public void walkToWorldEdgeClimbingOverFence(){
+      
+    } 
+}
     
+
