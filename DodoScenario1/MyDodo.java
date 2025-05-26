@@ -206,6 +206,20 @@ public class MyDodo extends Dodo
         }
     }
     
+    public void walkOverFencesAndLayEgg(){
+        while (!borderAhead()){
+          move();
+          if(fenceAhead()){
+           climbOverFence();
+              
+          }else{
+              move();
+          }
+          if(onNest()){
+              layEgg();
+          }
+      }
+    }
     
 }
     
