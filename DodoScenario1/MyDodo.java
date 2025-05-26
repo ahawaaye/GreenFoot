@@ -196,6 +196,17 @@ public class MyDodo extends Dodo
         move();
         turn180();
     }
+    
+    public void worldEmptyNestTopRow (){
+        while(!borderAhead()){
+            move();
+            if(onNest()){
+                layEgg();
+            }
+        }
+    }
+    
+    
 }
     
 
