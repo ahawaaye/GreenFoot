@@ -171,16 +171,16 @@ public class MyDodo extends Dodo
     }
 
     public void walkToWorldEdgeClimbingOverFence(){
-      while (!borderAhead()){
-          move();
-          if(fenceAhead()){
-           climbOverFence();
-              
-          }
-      }
-      
+        while (!borderAhead()){
+            move();
+            if(fenceAhead()){
+                climbOverFence();
+
+            }
+        }
+
     } 
-    
+
     public void pickUpGrainsAndPrintCoordinates(){
         while(!borderAhead()){
             move();
@@ -190,13 +190,13 @@ public class MyDodo extends Dodo
             }
         }
     }
-    
+
     public void stepOneCellBackwards(){
         turn180();
         move();
         turn180();
     }
-    
+
     public void worldEmptyNestTopRow (){
         while(!borderAhead()){
             move();
@@ -205,22 +205,36 @@ public class MyDodo extends Dodo
             }
         }
     }
-    
+
     public void walkOverFencesAndLayEgg(){
         while (!borderAhead()){
-          move();
-          if(fenceAhead()){
-           climbOverFence();
-              
-          }else{
-              move();
-          }
-          if(onNest()){
-              layEgg();
-          }
-      }
+            move();
+            if(fenceAhead()){
+                climbOverFence();
+
+            }else{
+                move();
+            }
+            if(onNest()){
+                layEgg();
+            }
+        }
     }
-    
+
+    public void findNest(){ 
+        while (eggAhead()) {
+            pickUpEgg();   
+            move();
+            if(!eggAhead()){
+                turnRight();
+            }
+            if(nestAhead()){
+                move();
+                onNest();
+                break;
+            }
+
+        }
+    }
 }
-    
 
