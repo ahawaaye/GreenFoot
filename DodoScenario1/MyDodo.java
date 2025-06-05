@@ -222,18 +222,17 @@ public class MyDodo extends Dodo
     }
 
     public void findNest(){ 
-        while (eggAhead()) {
+        while (!onNest()) {
             pickUpEgg();   
             move();
-            if(!eggAhead()){
+            while(!eggAhead()&&!nestAhead()){
                 turnRight();
+                
             }
             if(nestAhead()){
-                move();
+                move();  
                 onNest();
-                break;
             }
-
         }
     }
 }
