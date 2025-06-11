@@ -223,11 +223,11 @@ public class MyDodo extends Dodo
 
     public void findNest(){ 
         while (!onNest()) {
-            pickUpEgg();   
             move();
+            pickUpEgg();   
             while(!eggAhead()&&!nestAhead()){
                 turnRight();
-                
+
             }
             if(nestAhead()){
                 move();  
@@ -235,5 +235,33 @@ public class MyDodo extends Dodo
             }
         }
     }
-}
+    
+    public boolean frontIsClear(){
+        return canMove(); 
+    }
+    
+    public boolean leftIsClear(){
+        turnLeft();
+        boolean clear = frontIsClear();
+        turnRight();
+        
+        return clear;
+        
+    }
 
+    
+    public void mazerunner(){
+        while(!onNest()){
+            if(leftIsClear()){
+                turnLeft();
+                move();
+            } else if (frontIsClear()){
+              move();
+            } else{
+                turnRight();
+            } if(nestAhead()){
+                move();
+            }
+        }
+    }
+}
