@@ -44,7 +44,7 @@ public class MyDodo extends Dodo
      *                      (an obstruction or end of world ahead)
      */
     public boolean canMove() {
-        if ( borderAhead() ){
+        if ( borderAhead() || fenceAhead()){
             return false;
         } else {
             return true;
@@ -235,33 +235,37 @@ public class MyDodo extends Dodo
             }
         }
     }
-    
+
     public boolean frontIsClear(){
         return canMove(); 
     }
-    
-    public boolean leftIsClear(){
+
+    public boolean LeftIsClear(){
         turnLeft();
-        boolean clear = frontIsClear();
+        boolean clear = canMove();
         turnRight();
-        
+
         return clear;
-        
+
     }
 
-    
     public void mazerunner(){
-        while(!onNest()){
-            if(leftIsClear()){
+        while (!onNest()) {
+            move();
+            if (LeftIsClear()) {
                 turnLeft();
                 move();
-            } else if (frontIsClear()){
-              move();
-            } else{
-                turnRight();
-            } if(nestAhead()){
+            } else if (frontIsClear()) {
                 move();
+            } else {
+                turnRight();
             }
         }
     }
+    
+    public void faceEast(){
+        
+    }
 }
+
+
