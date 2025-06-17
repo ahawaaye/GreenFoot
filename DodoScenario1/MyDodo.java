@@ -262,10 +262,11 @@ public class MyDodo extends Dodo
             }
         }
     }
-    
+
     public void faceEast(){
-        
+        if (getDirection() != EAST) {
+            turnLeft();
+        }
     }
 }
-
 
