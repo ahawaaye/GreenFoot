@@ -268,5 +268,25 @@ public class MyDodo extends Dodo
             turnLeft();
         }
     }
+
+    void goToLocation(int x, int y){
+        // First, move left or right (X direction)
+        while (getX() < x) {
+            setDirection(EAST);  
+            move();            
+        }
+        while (getX() > x) {
+            setDirection(WEST); 
+            move();
+        }
+        while (getY() < y) {
+            setDirection(NORTH); 
+        }
+        while (getY() >y) {
+            setDirection(SOUTH); 
+            move();
+        }
+    }
+
 }
 
