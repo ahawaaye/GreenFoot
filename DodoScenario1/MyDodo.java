@@ -299,7 +299,17 @@ public class MyDodo extends Dodo
         if (onEgg()) {
             eggCount++;
         }
+        System.out.println("I found " + eggCount + " egg(s) in this row!");
         return eggCount;
     }
 
+    void layTrailOfEggs(int n){
+        while (n > 0) {
+            layEgg();  
+            n = n - 1;   
+            if (n > 0) {
+                move();   
+            }
+        }
+    }
 }
