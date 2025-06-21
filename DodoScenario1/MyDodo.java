@@ -251,7 +251,6 @@ public class MyDodo extends Dodo
 
     public void mazerunner(){
         while (!onNest()) {
-            move();
             if (LeftIsClear()) {
                 turnLeft();
                 move();
@@ -270,7 +269,6 @@ public class MyDodo extends Dodo
     }
 
     void goToLocation(int x, int y){
-        // First, move left or right (X direction)
         while (getX() < x) {
             setDirection(EAST);  
             move();            
@@ -288,5 +286,20 @@ public class MyDodo extends Dodo
         }
     }
 
-}
+    int countEggsInRow() {
+        int eggCount = 0;
+        turn180();
+        GoBackToStartOfRowAndFaceBack();  
+        while (!onNest()) {
+            if (onEgg()) {
+                eggCount++;
+            }
+            move(); 
+        }
+        if (onEgg()) {
+            eggCount++;
+        }
+        return eggCount;
+    }
 
+}
