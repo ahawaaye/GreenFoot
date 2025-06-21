@@ -262,44 +262,47 @@ public class MyDodo extends Dodo
         }
     }
 
-    public void faceEast(){
+    void faceEast(){
         if (getDirection() != EAST) {
             turnLeft();
         }
     }
 
-    void goToLocation(int x, int y){
+    void goToLocation(int x, int y) {
         while (getX() < x) {
-            setDirection(EAST);  
-            move();            
+            setDirection(EAST);
+            move();
         }
         while (getX() > x) {
-            setDirection(WEST); 
+            setDirection(WEST);
             move();
         }
         while (getY() < y) {
-            setDirection(NORTH); 
+            setDirection(NORTH);
+            move();  // 
         }
-        while (getY() >y) {
-            setDirection(SOUTH); 
+        while (getY() > y) {
+            setDirection(SOUTH);
             move();
         }
     }
 
     int countEggsInRow() {
         int eggCount = 0;
-        turn180();
-        GoBackToStartOfRowAndFaceBack();  
-        while (!onNest()) {
+
+        setDirection(EAST);
+        GoBackToStartOfRowAndFaceBack();
+        while (frontIsClear()) {
             if (onEgg()) {
                 eggCount++;
             }
-            move(); 
+            move();
         }
+
         if (onEgg()) {
             eggCount++;
         }
-        System.out.println("I found " + eggCount + " egg(s) in this row!");
+
         return eggCount;
     }
 
@@ -312,4 +315,82 @@ public class MyDodo extends Dodo
             }
         }
     }
+
+    boolean canMoveDown() {
+        turnRight();              
+        boolean clear = frontIsClear();
+        turnLeft();                
+        return clear;
+    }
+
+    void countAllEggsInWorld() {
+        int eggCount = 0;
+
+        while (frontIsClear()) {
+            move();
+        }
+
+        turnLeft(); 
+        while (frontIsClear()) {
+            move();
+        }
+
+        turnRight(); 
+
+        while (true) {
+
+            while (true) {
+                if (onEgg()) {
+                    eggCount++;
+                }
+
+                if (frontIsClear()) {
+                    move();
+                } else {
+                    break; 
+                }
+            }
+
+            if (onEgg()) {
+                eggCount++;
+            }
+
+            turnRight(); 
+            if (frontIsClear()) {
+                move();       
+                turnRight(); 
+            } else {
+                break; 
+            }
+
+            while (true) {
+                if (onEgg()) {
+                    eggCount++;
+                }
+
+                if (frontIsClear()) {
+                    move();
+                } else {
+                    break;
+                }
+            }
+
+            if (onEgg()) {
+                eggCount++;
+            }
+
+            turnLeft(); 
+            if (frontIsClear()) {
+                move();      
+                turnLeft();  
+            } else {
+                break; 
+            }
+        }
+
+        showCompliment("I found " + eggCount + " eggs!");
+    }
+    
+    
+
 }
