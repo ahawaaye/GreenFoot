@@ -327,70 +327,95 @@ public class MyDodo extends Dodo
         int eggCount = 0;
 
         while (frontIsClear()) {
-            move();
+            move(); 
         }
 
         turnLeft(); 
         while (frontIsClear()) {
-            move();
+            move(); 
         }
-
         turnRight(); 
-
         while (true) {
-
-            while (true) {
+            while (frontIsClear()) {
                 if (onEgg()) {
-                    eggCount++;
+                    eggCount++; 
                 }
 
-                if (frontIsClear()) {
-                    move();
-                } else {
-                    break; 
-                }
+                move(); 
             }
-
             if (onEgg()) {
                 eggCount++;
             }
 
             turnRight(); 
             if (frontIsClear()) {
-                move();       
+                move(); 
                 turnRight(); 
             } else {
                 break; 
             }
-
-            while (true) {
+            while (frontIsClear()) {
                 if (onEgg()) {
-                    eggCount++;
+                    eggCount++; 
                 }
 
-                if (frontIsClear()) {
-                    move();
-                } else {
-                    break;
-                }
+                move(); 
             }
 
             if (onEgg()) {
                 eggCount++;
             }
 
-            turnLeft(); 
+            turnLeft();
             if (frontIsClear()) {
-                move();      
-                turnLeft();  
+                move();
+                turnLeft();
             } else {
                 break; 
             }
         }
 
-        showCompliment("I found " + eggCount + " eggs!");
+        showCompliment("Total eggs in the world: " + eggCount);
     }
-    
-    
 
+    int countEggsRow() {
+        int eggsInRow = 0; 
+        while (!borderAhead()){
+            if (onEgg()) {
+                eggsInRow++;
+            }
+            move();
+
+        }
+        if (onEgg()) {
+            eggsInRow++;
+        }
+        return eggsInRow;
+    }
+
+    int rowMostEggs(){
+        int rowMost = 0;
+        int eggsInRow = 0;
+        int row = getY(); 
+
+        for(int i =0; i <getWorld().getHeight(); i++){
+            eggsInRow = countEggsRow();
+            if(eggsInRow> rowMost){
+                rowMost = eggsInRow;
+                row = getY();
+            } 
+            int currentDirection = getDirection();
+            setDirection(SOUTH);
+            move();
+            if(currentDirection == WEST){
+                setDirection(EAST);
+            }
+            else{
+                setDirection(WEST);
+            }
+
+        }
+
+        return row;
+    }
 }
