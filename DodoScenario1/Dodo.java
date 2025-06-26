@@ -16,7 +16,7 @@ public abstract class Dodo extends Actor
     private int myDirection;
 
     private GreenfootImage imageRight, imageLeft;
-    
+
     protected Dodo ( int init_direction ) {
         this.myDirection = modulo( init_direction, 4);
         imageRight  = getImage();
@@ -25,7 +25,7 @@ public abstract class Dodo extends Actor
         setImage ();
 
     }
-    
+
     private void setImage (){
         if ( myDirection == NORTH ) {
             setImage( imageLeft );
@@ -41,8 +41,7 @@ public abstract class Dodo extends Actor
             setRotation( 0 );
         } 
     }
-    
-    
+
     public boolean fenceAhead() {
         return getActorAhead( Fence.class ) != null;
     }
@@ -50,7 +49,7 @@ public abstract class Dodo extends Actor
     public boolean eggAhead() {
         return getActorAhead( Egg.class ) != null;
     }
-    
+
     public boolean nestAhead() {
         return getActorAhead( Nest.class ) != null;
     }
@@ -70,7 +69,7 @@ public abstract class Dodo extends Actor
     public void layEgg() {
         getWorld().addObject( new BlueEgg (), getX (), getY () );
     }
-    
+
     public Egg getEgg() {
         return getActor( Egg.class );
     }
@@ -119,7 +118,7 @@ public abstract class Dodo extends Actor
     public int randomDirection() {
         return Greenfoot.getRandomNumber( 4 );
     }
-    
+
     private int modulo( int a, int b ) {
         return (a % b + b) % b;
     }
@@ -154,7 +153,6 @@ public abstract class Dodo extends Actor
         return (E) getOneObjectAtOffset(0, 0, cls);
     }
 
-
     public void step() {
         if ( myDirection == NORTH ) {
             setLocation( getX(), getY() - 1 );
@@ -170,7 +168,6 @@ public abstract class Dodo extends Actor
         }
     }
 
-        
     /**
      * Test is we are facing the border.
      */
@@ -189,7 +186,7 @@ public abstract class Dodo extends Actor
     public boolean facingNorth () {
         return getDirection() == NORTH;
     }
-    
+
     /**
      * Turns towards the left.
      */
@@ -211,5 +208,6 @@ public abstract class Dodo extends Actor
     protected void showCompliment ( String compl_msg ) {
         Message.showMessage(  new Compliment ( compl_msg ), getWorld() );
     }
+
 
 }

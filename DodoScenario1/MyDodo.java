@@ -418,4 +418,98 @@ public class MyDodo extends Dodo
 
         return row;
     }
+
+    public void moveRandomly() {
+        int myNrOfStepsTaken = 0;
+        int myScore = 0;
+
+        while (myNrOfStepsTaken < Mauritius.MAXSTEPS) {
+            int richting = randomDirection();
+            setDirection(richting);
+
+            if (canMove()) {
+                move();
+                myNrOfStepsTaken++;
+
+                if (onEgg()) {
+                    pickUpEgg();
+                    myScore++;
+                }
+            }
+
+            // Laat score & stappen altijd zien
+            getScore(myNrOfStepsTaken, myScore);
+        }
+
+        showCompliment("Klaar! Totale score: " + myScore);
+    }
+
+    public void getScore(int steps, int score) {
+        showCompliment("Stappen: " + steps + " | Score: " + score);
+    }
+
+    public void dodoRace() {
+        int stappen = 0;
+        int score = 0;
+
+        while (stappen < Mauritius.MAXSTEPS) {
+
+            // 1. Kijk eerst of er een ei voor Mimi ligt
+            if (eggAhead() && canMove()) {
+                move();         // Ga naar het ei
+                stappen++;
+
+                // Check of ze er nu op staat
+                if (onEgg()) {
+                    pickUpEgg();
+                    score++;    // 1 punt per ei (eventueel uitbreiden voor gouden ei)
+                }
+            }
+
+            // 2. Geen ei voor haar, maar ze kan wel lopen
+            else if (canMove()) {
+                move();         // Gewoon lopen
+                stappen++;
+
+                if (onEgg()) {
+                    pickUpEgg();
+                    score++;
+                }
+            }
+
+            // 3. Ze zit vast: kies andere richtingen
+            else {
+                boolean moved = false;
+
+                // Probeer maximaal 4 richtingen
+                for (int i = 0; i < 4; i++) {
+                    setDirection(randomDirection());
+
+                    if (canMove()) {
+                        move();
+                        stappen++;
+
+                        if (onEgg()) {
+                            pickUpEgg();
+                            score++;
+                        }
+
+                        moved = true;
+                        break;
+                    }
+                }
+
+                if (!moved) {
+                    showError("Mimi zit écht vast!");
+                    break;
+                }
+            }
+
+            // Toon score en stappen na elke actie
+            getScore(stappen, score);
+        }
+
+        showCompliment("Klaar! Score: " + score + ", Stappen: " + stappen);
+    }
+
 }
