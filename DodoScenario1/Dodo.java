@@ -209,5 +209,8 @@ public abstract class Dodo extends Actor
         Message.showMessage(  new Compliment ( compl_msg ), getWorld() );
     }
 
+    public void updateScores(int score1, int score2){
+        ((Mauritius) getWorld()).updateScore(score1,score2);
+    }
 
 }

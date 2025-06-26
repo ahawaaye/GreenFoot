@@ -8,10 +8,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class MyDodo extends Dodo
 {
     private int myNrOfEggsHatched;
+    protected int myNrOfStepsTaken;
+    protected int myScore;
 
     public MyDodo() {
         super( EAST );
         myNrOfEggsHatched = 0;
+        myNrOfStepsTaken = 0; 
+        myScore = 0;
     }
 
     public void act() {
@@ -420,96 +424,66 @@ public class MyDodo extends Dodo
     }
 
     public void moveRandomly() {
-        int myNrOfStepsTaken = 0;
-        int myScore = 0;
+        myNrOfStepsTaken = 0;
+        int Direction; 
+
+        while(myNrOfStepsTaken < Mauritius.MAXSTEPS ){
+
+            do{
+                Direction = randomDirection();
+                setDirection(Direction);
+            }while (!canMove());
+            move();
+            myNrOfStepsTaken++;
+        }
+
+    }
+
+    public void getScore() {
+        int score = Mauritius.MAXSTEPS -myNrOfStepsTaken;
+        updateScores(score,myNrOfStepsTaken ); 
+    }
+
+    public void endRace(){
+        myNrOfStepsTaken = 0;
+        myScore = 0;
 
         while (myNrOfStepsTaken < Mauritius.MAXSTEPS) {
-            int richting = randomDirection();
-            setDirection(richting);
+            if (onEgg()) {
+                pickUpEgg();
+                myScore += 5;
+            }
+
+            if (eggAhead() && canMove()) {
+                move();
+                myNrOfStepsTaken++;
+                continue;
+            }
+
+            turnRight();
+            if (eggAhead() && canMove()) {
+                move();
+                myNrOfStepsTaken++;
+                continue;
+            }
+            turnLeft();
+            turnLeft();
+            if (eggAhead() && canMove()) {
+                move();
+                myNrOfStepsTaken++;
+                continue;
+            }
+            turnRight();
 
             if (canMove()) {
                 move();
                 myNrOfStepsTaken++;
-
-                if (onEgg()) {
-                    pickUpEgg();
-                    myScore++;
-                }
+            } else {
+                turnRight();
             }
-
-            // Laat score & stappen altijd zien
-            getScore(myNrOfStepsTaken, myScore);
         }
 
-        showCompliment("Klaar! Totale score: " + myScore);
-    }
-
-    public void getScore(int steps, int score) {
-        showCompliment("Stappen: " + steps + " | Score: " + score);
-    }
-
-    public void dodoRace() {
-        int stappen = 0;
-        int score = 0;
-
-        while (stappen < Mauritius.MAXSTEPS) {
-
-            // 1. Kijk eerst of er een ei voor Mimi ligt
-            if (eggAhead() && canMove()) {
-                move();         // Ga naar het ei
-                stappen++;
-
-                // Check of ze er nu op staat
-                if (onEgg()) {
-                    pickUpEgg();
-                    score++;    // 1 punt per ei (eventueel uitbreiden voor gouden ei)
-                }
-            }
-
-            // 2. Geen ei voor haar, maar ze kan wel lopen
-            else if (canMove()) {
-                move();         // Gewoon lopen
-                stappen++;
-
-                if (onEgg()) {
-                    pickUpEgg();
-                    score++;
-                }
-            }
-
-            // 3. Ze zit vast: kies andere richtingen
-            else {
-                boolean moved = false;
-
-                // Probeer maximaal 4 richtingen
-                for (int i = 0; i < 4; i++) {
-                    setDirection(randomDirection());
-
-                    if (canMove()) {
-                        move();
-                        stappen++;
-
-                        if (onEgg()) {
-                            pickUpEgg();
-                            score++;
-                        }
-
-                        moved = true;
-                        break;
-                    }
-                }
-
-                if (!moved) {
-                    showError("Mimi zit écht vast!");
-                    break;
-                }
-            }
-
-            // Toon score en stappen na elke actie
-            getScore(stappen, score);
-        }
-
-        showCompliment("Klaar! Score: " + score + ", Stappen: " + stappen);
+        getScore();
     }
 
 }
