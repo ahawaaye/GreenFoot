@@ -439,19 +439,19 @@ public class MyDodo extends Dodo
 
     }
 
-    public void getScore() {
-        int score = Mauritius.MAXSTEPS -myNrOfStepsTaken;
-        updateScores(score,myNrOfStepsTaken ); 
+    public void getScore(int myScore) {
+        int Stappen = Mauritius.MAXSTEPS -myNrOfStepsTaken;
+        updateScores(Stappen,myScore); 
     }
 
     public void endRace(){
         myNrOfStepsTaken = 0;
         myScore = 0;
-
+        
         while (myNrOfStepsTaken < Mauritius.MAXSTEPS) {
             if (onEgg()) {
-                pickUpEgg();
-                myScore += 5;
+                Egg PickedEgg = pickUpEgg();
+                myScore += PickedEgg.getValue();
             }
 
             if (eggAhead() && canMove()) {
@@ -481,9 +481,9 @@ public class MyDodo extends Dodo
             } else {
                 turnRight();
             }
+            getScore(myScore);
         }
 
-        getScore();
     }
 
 }
