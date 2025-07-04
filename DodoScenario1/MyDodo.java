@@ -132,10 +132,22 @@ public class MyDodo extends Dodo
         return true;
     }
 
+    /**
+     * Turns the Dodo 180 degrees.
+     *
+     * <p> Initial: Facing any direction
+     * <p> Final: Facing the opposite direction
+     */
+
     public void turn180(){
         turnRight();
         turnRight();
     }
+
+    /**  Makes dodo go over the fence 
+     *   
+     * 
+     */
 
     public void climbOverFence(){
         turnLeft();
@@ -149,6 +161,9 @@ public class MyDodo extends Dodo
 
     }
 
+    /**
+     *   tells dodo if there is a grain ahead
+     */
     public boolean grainAhead(){
         boolean result = false;
         move();
@@ -161,6 +176,9 @@ public class MyDodo extends Dodo
         return result;
     } 
 
+    /**
+     *   Tells DoDo to go to Egg
+     */
     public boolean gotoEgg(){
         while(onEgg()== false){
             move();
@@ -168,12 +186,18 @@ public class MyDodo extends Dodo
         return true;
     } 
 
+    /**
+     *   tells Dodo to the end of the row and then turn back
+     */
     public void GoBackToStartOfRowAndFaceBack(){
         turn180();
         walkToWorldEdgePrintingCoordinates();
         turn180();
     }
 
+    /**
+     *  Tells  the dodo to walk all the wat to the egde of the world (a row) while climbing over fences
+     */
     public void walkToWorldEdgeClimbingOverFence(){
         while (!borderAhead()){
             move();
@@ -185,7 +209,9 @@ public class MyDodo extends Dodo
 
     } 
 
-    public void pickUpGrainsAndPrintCoordinates(){
+    /**
+     *  Tells  the dodo to pick up grains infront of him while printing out the Coordinates
+     */public void pickUpGrainsAndPrintCoordinates(){
         while(!borderAhead()){
             move();
             if(onGrain()){
@@ -195,13 +221,17 @@ public class MyDodo extends Dodo
         }
     }
 
-    public void stepOneCellBackwards(){
+    /**
+     *  Tells  the dodo to step one cell back
+     */public void stepOneCellBackwards(){
         turn180();
         move();
         turn180();
     }
 
-    public void worldEmptyNestTopRow (){
+    /**
+     *  Tells  the dodo to lay an egg on a empty nest
+     */public void worldEmptyNestTopRow (){
         while(!borderAhead()){
             move();
             if(onNest()){
@@ -210,7 +240,9 @@ public class MyDodo extends Dodo
         }
     }
 
-    public void walkOverFencesAndLayEgg(){
+    /**
+     *  Tells  the dodo to walk all the way to the egde of the world (a row) while climbing over fences and lay an egg at the end og the trail
+     */public void walkOverFencesAndLayEgg(){
         while (!borderAhead()){
             move();
             if(fenceAhead()){
@@ -225,7 +257,9 @@ public class MyDodo extends Dodo
         }
     }
 
-    public void findNest(){ 
+    /**
+     *  Tells  the dodo to pick up the egg trails and then at the end of the trail get on the nest
+     */public void findNest(){ 
         while (!onNest()) {
             move();
             pickUpEgg();   
@@ -240,11 +274,15 @@ public class MyDodo extends Dodo
         }
     }
 
-    public boolean frontIsClear(){
+    /**
+     *  checks if dodos front view is clear
+     */public boolean frontIsClear(){
         return canMove(); 
     }
 
-    public boolean LeftIsClear(){
+    /**
+     *  Tells  if dodos left view is clear
+     */public boolean LeftIsClear(){
         turnLeft();
         boolean clear = canMove();
         turnRight();
@@ -253,7 +291,9 @@ public class MyDodo extends Dodo
 
     }
 
-    public void mazerunner(){
+    /**
+     *  Tells  the dodo to find a nest in a maze
+     */public void mazerunner(){
         while (!onNest()) {
             if (LeftIsClear()) {
                 turnLeft();
@@ -266,13 +306,17 @@ public class MyDodo extends Dodo
         }
     }
 
-    void faceEast(){
+    /**
+     *  Tells  the dodo to face east
+     */void faceEast(){
         if (getDirection() != EAST) {
-            turnLeft();
+         turnLeft();
         }
     }
 
-    void goToLocation(int x, int y) {
+    /**
+     *  Tells  the dodo to go to a certain direction once you tell it to go to the direction you want
+     */void goToLocation(int x, int y) {
         while (getX() < x) {
             setDirection(EAST);
             move();
@@ -291,7 +335,9 @@ public class MyDodo extends Dodo
         }
     }
 
-    int countEggsInRow() {
+    /**
+     *  Tells  the dodo to count all the eggs in one row and then face back 
+     */int countEggsInRow() {
         int eggCount = 0;
 
         setDirection(EAST);
@@ -310,7 +356,9 @@ public class MyDodo extends Dodo
         return eggCount;
     }
 
-    void layTrailOfEggs(int n){
+    /**
+     *  Dodo lays a trail of eggs
+     */void layTrailOfEggs(int n){
         while (n > 0) {
             layEgg();  
             n = n - 1;   
@@ -320,14 +368,18 @@ public class MyDodo extends Dodo
         }
     }
 
-    boolean canMoveDown() {
+    /**
+     *  Tells  the dodo if it can move down
+     */boolean canMoveDown() {
         turnRight();              
         boolean clear = frontIsClear();
         turnLeft();                
         return clear;
     }
 
-    void countAllEggsInWorld() {
+    /**
+     *  Tells  the dodo to count all the eggs in the world by going to each row
+     */void countAllEggsInWorld() {
         int eggCount = 0;
 
         while (frontIsClear()) {
@@ -382,7 +434,9 @@ public class MyDodo extends Dodo
         showCompliment("Total eggs in the world: " + eggCount);
     }
 
-    int countEggsRow() {
+    /**
+     *  Tells  the dodo to count all the eggs in one row
+     */int countEggsRow() {
         int eggsInRow = 0; 
         while (!borderAhead()){
             if (onEgg()) {
@@ -397,7 +451,9 @@ public class MyDodo extends Dodo
         return eggsInRow;
     }
 
-    int rowMostEggs(){
+    /**
+     *  Dodo goes through every row and then counts all the eggs in each row then tells us which row has the most rows
+     */int rowMostEggs(){
         int rowMost = 0;
         int eggsInRow = 0;
         int row = getY(); 
@@ -423,7 +479,9 @@ public class MyDodo extends Dodo
         return row;
     }
 
-    public void moveRandomly() {
+    /**
+     *  Tells  the dodo to move randomly around the world
+     */public void moveRandomly() {
         myNrOfStepsTaken = 0;
         int Direction; 
 
@@ -439,15 +497,19 @@ public class MyDodo extends Dodo
 
     }
 
-    public void getScore(int myScore) {
+    /**
+     *  Gets the score of how many points dodo has got from collecting all the eggs and it tells you how many steps dodo has taken
+     */public void getScore(int myScore) {
         int Stappen = Mauritius.MAXSTEPS -myNrOfStepsTaken;
         updateScores(Stappen,myScore); 
     }
 
-    public void endRace(){
+    /**
+     *  Dodo picks up every egg in the world collecting points from it while only taking 40 steps.
+     */public void endRace(){
         myNrOfStepsTaken = 0;
         myScore = 0;
-        
+
         while (myNrOfStepsTaken < Mauritius.MAXSTEPS) {
             if (onEgg()) {
                 Egg PickedEgg = pickUpEgg();
